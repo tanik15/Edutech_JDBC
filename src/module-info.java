@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * 
- */
-module Edutech_JDBC {
-}
