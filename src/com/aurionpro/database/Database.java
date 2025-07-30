@@ -11,7 +11,7 @@ public class Database {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/eduTech", ConfidentialData.username,ConfidentialData.password);
-			System.out.println("successful");
+//			System.out.println("successful");
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

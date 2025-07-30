@@ -1,13 +1,12 @@
-package com.aurionpro.model;
+package com.aurionpro.model.studentsModel;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
-public class studentModel {
+public class StudentModel {
 	private int student_id;
 	private String student_name;
 	private int Student_rollnumber;
-	private Date student_DOB;
+	private String student_DOB;
 	public int getStudent_id() {
 		return student_id;
 	}
@@ -26,16 +25,16 @@ public class studentModel {
 	public void setStudent_rollnumber(int student_rollnumber) {
 		Student_rollnumber = student_rollnumber;
 	}
-	public Date getStudent_DOB() {
+	public String getStudent_DOB() {
 		return student_DOB;
 	}
-	public void setStudent_DOB(Date student_DOB) {
-		this.student_DOB = student_DOB;
+	public void setStudent_DOB(String student_DOB) {
+		this.student_DOB = student_DOB ;
 	}
-	public studentModel() {
+	public StudentModel() {
 		super();
 	}
-	public studentModel(int student_id, String student_name, int student_rollnumber, Date student_DOB) {
+	public StudentModel(int student_id, String student_name, int student_rollnumber, String student_DOB) {
 		super();
 		this.student_id = student_id;
 		this.student_name = student_name;
