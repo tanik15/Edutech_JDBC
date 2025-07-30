@@ -1,9 +1,8 @@
 package com.aurionpro.test;
 
-import java.util.List;
+import java.util.Scanner;
 
-import com.aurionpro.dao.StudentExamDao;
-import com.aurionpro.model.studentsModel.StudentExamModel;
+import com.aurionpro.controller.StudentProfileController;
 
 public class StudentDaoTest {
 
@@ -28,11 +27,29 @@ public class StudentDaoTest {
 //			System.out.println(s.getStudent_id() + "\t" + s.getStudent_name() + "\t" + s.getStudent_rollnumber() + "\t"
 //					+ s.getStudent_DOB());
 //		}
+		Scanner sc = new Scanner(System.in);
+		System.out.println(StudentProfileController.isValidEmail("123gmail.com",sc));
 		
-		List<StudentExamModel> exams = StudentExamDao.viewAllExams();
-		exams.stream().forEach((exam)->{
-			System.out.println(exam.getExamId()+"\t"+exam.getSubjectId()+"\t"+exam.getExamDate()+"\t"+exam.getTotalMarks()+"\t"+exam.getSemester());
-		});
+		
+//		List<StudentExamModel> exams = StudentExamDao.viewAllExams();
+//		exams.stream().forEach((exam)->{
+//			System.out.println(exam.getExamId()+"\t"+exam.getSubjectId()+"\t"+exam.getExamDate()+"\t"+exam.getTotalMarks()+"\t"+exam.getSemester());
+//		});
+//		studentProfileDao.displayAllStudentProfiles().stream().forEach((profile)->{
+//			System.out.println(profile.getStudentId()+"\t"
+//					+profile.getStudentAddress()+"\t"+
+//					profile.getStudentGender()+"\t"+
+//					profile.getStudentEmail()+"\t"+
+//					profile.getStudentPhone());
+//		});
+//		System.out.println();
+//		StudentEnrollmentDao.displayAllEnrollmentDetails().stream().forEach((profile)->{
+//			System.out.println(profile.getStudentId()+"\t"
+//					+profile.getClassId()+"\t"+
+//					profile.getEnrollmentDate()+"\t"+
+//					profile.getAcademicYear()+"\t"+
+//					profile.getEnrollmentStatus());
+//		});
+		
 	}
-
 }

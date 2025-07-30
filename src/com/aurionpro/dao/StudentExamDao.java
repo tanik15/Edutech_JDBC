@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.aurionpro.database.Database;
 import com.aurionpro.model.studentsModel.StudentExamModel;
-import com.aurionpro.model.studentsModel.StudentModel;
 
 public class StudentExamDao {
 	private static PreparedStatement preparedStatement = null;

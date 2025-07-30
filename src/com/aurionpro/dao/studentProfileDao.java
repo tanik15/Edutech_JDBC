@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.aurionpro.database.Database;
@@ -15,7 +17,7 @@ public class studentProfileDao {
 
 	public static void addStudentProfile(StudentProfileModel studentProfile) {
 		connection = Database.getConnection();
-		if (connection != null && studentDao.checkStudent(studentProfile.getStudentId())) {
+		if (connection != null && StudentDao.checkStudent(studentProfile.getStudentId())) {
 			try {
 				preparedStatement = connection
 						.prepareStatement("SELECT student_id FROM student_profile where student_id = ?");
@@ -63,7 +65,7 @@ public class studentProfileDao {
 			preparedStatement.setInt(1, studentProfile.getStudentId());
 			ResultSet rs = preparedStatement.executeQuery();
 			if (!rs.next()) {
-				System.out.println("No Student Profile Exist with StudentId : "+ studentProfile.getStudentId());
+				System.out.println("No Student Profile Exist with StudentId : " + studentProfile.getStudentId());
 				return;
 			}
 			preparedStatement = connection.prepareStatement(
@@ -81,4 +83,27 @@ public class studentProfileDao {
 		}
 
 	}
+
+	public static List<StudentProfileModel> getAllStudentProfiles() {
+		connection = Database.getConnection();
+		List<StudentProfileModel> studentProfiles = new ArrayList<>();
+		try {
+			preparedStatement = connection.prepareStatement("SELECT * FROM student_profile");
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				StudentProfileModel studentProfile = new StudentProfileModel();
+				studentProfile.setStudentId(rs.getInt(1));
+				studentProfile.setStudentAddress(rs.getString(2));
+				studentProfile.setStudentGender(rs.getString(3));
+				studentProfile.setStudentPhone(rs.getString(4));
+				studentProfile.setStudentEmail(rs.getString(5));
+				studentProfiles.add(studentProfile);
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return studentProfiles;
+	}
+
 }

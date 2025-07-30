@@ -12,11 +12,11 @@ import com.aurionpro.database.Database;
 import com.aurionpro.model.studentsModel.StudentProfileModel;
 import com.aurionpro.model.studentsModel.StudentModel;
 
-public class studentDao {
+public class StudentDao {
 	private static PreparedStatement preparedStatement = null;
 	private static Connection connection = null;
 
-	private StudentModel createStudentObj(ResultSet result) {
+	private static StudentModel createStudentObj(ResultSet result) {
 		StudentModel student = new StudentModel();
 		try {
 			student.setStudent_id(result.getInt(1));
@@ -30,7 +30,7 @@ public class studentDao {
 		return student;
 	}
 
-	public List<StudentModel> getAllStudents() {
+	public static List<StudentModel> getAllStudents() {
 		connection = Database.getConnection();
 		List<StudentModel> students = new ArrayList<>();
 		if (connection != null) {
@@ -70,7 +70,7 @@ public class studentDao {
 		return false;
 	}
 
-	public StudentModel getAStudent(int studentId) {
+	public static StudentModel getAStudent(int studentId) {
 		connection = Database.getConnection();
 		StudentModel student = null;
 		if (connection != null && checkStudent(studentId)) {
@@ -90,14 +90,14 @@ public class studentDao {
 
 	}
 
-	public void deleteStudent(int id) {
+	public static void deleteStudent(int id) {
 		try {
 			connection = Database.getConnection();
 			if (checkStudent(id)) {
 				preparedStatement = connection.prepareStatement("UPDATE Student_table SET is_active = FALSE WHERE student_id = ? ");
 				preparedStatement.setDouble(1, id);
 				int update = preparedStatement.executeUpdate();
-				System.out.println("student ID:"+ id + " is InActive");
+				System.out.println("\n✅ Student with ID: " + id + " has been marked as Inactive.\n");
 				return;
 			}
 			System.out.println("Student don't exist");
@@ -107,7 +107,7 @@ public class studentDao {
 		}
 	}
 	
-	public void addNewStudent(StudentModel student) {
+	public static void addNewStudent(StudentModel student) {
 		connection = Database.getConnection();
 		try {
 			int rollnumber = 0;
@@ -122,7 +122,8 @@ public class studentDao {
 			preparedStatement.setInt(2, rollnumber+1);
 			preparedStatement.setString(3, student.getStudent_DOB());
 			int update = preparedStatement.executeUpdate();
-			System.out.println(update + " students are added");
+			if(update==1)
+			System.out.println("\n✅ Student added successfully!");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
