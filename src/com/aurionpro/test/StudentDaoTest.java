@@ -2,12 +2,14 @@ package com.aurionpro.test;
 
 import java.util.Scanner;
 
-import com.aurionpro.controller.StudentProfileController;
+import com.aurionpro.controller.EnrollmentController;
+import com.aurionpro.service.EnrollmentService;
 
 public class StudentDaoTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Scanner scanner = new Scanner(System.in);
 //		studentDao sd = new studentDao();
 
 //		studentModel student = sd.getAStudent(5);
@@ -27,10 +29,10 @@ public class StudentDaoTest {
 //			System.out.println(s.getStudent_id() + "\t" + s.getStudent_name() + "\t" + s.getStudent_rollnumber() + "\t"
 //					+ s.getStudent_DOB());
 //		}
-		Scanner sc = new Scanner(System.in);
-		System.out.println(StudentProfileController.isValidEmail("123gmail.com",sc));
-		
-		
+//		Scanner sc = new Scanner(System.in);
+//		System.out.println(StudentProfileController.isValidEmail("123gmail.com",sc));
+//		DateController.viewAllExams();
+		EnrollmentService.displayEnrollmentMenu(scanner);
 //		List<StudentExamModel> exams = StudentExamDao.viewAllExams();
 //		exams.stream().forEach((exam)->{
 //			System.out.println(exam.getExamId()+"\t"+exam.getSubjectId()+"\t"+exam.getExamDate()+"\t"+exam.getTotalMarks()+"\t"+exam.getSemester());

@@ -17,12 +17,14 @@ public class studentProfileDao {
 
 	public static void addStudentProfile(StudentProfileModel studentProfile) {
 		connection = Database.getConnection();
+		Scanner scanner = new Scanner(System.in);
 		if (connection != null && StudentDao.checkStudent(studentProfile.getStudentId())) {
 			try {
 				preparedStatement = connection
 						.prepareStatement("SELECT student_id FROM student_profile where student_id = ?");
 				preparedStatement.setInt(1, studentProfile.getStudentId());
 				ResultSet rs = preparedStatement.executeQuery();
+				
 				if (!rs.next()) {
 					preparedStatement = connection.prepareStatement("INSERT INTO student_profile VALUES (?,?,?,?,?)");
 					preparedStatement.setInt(1, studentProfile.getStudentId());
@@ -34,10 +36,8 @@ public class studentProfileDao {
 					System.out.println(update + " student profile is added");
 					return;
 				}
-				System.out.println("Student Profile Already present. Want to update (y/n)?");
-				Scanner scanner = new Scanner(System.in);
-				String choice = scanner.nextLine();
-				scanner.close();
+				String choice = "Y";
+				
 				if (choice.equalsIgnoreCase("y")) {
 					preparedStatement = connection.prepareStatement(
 							"UPDATE student_profile SET student_address =?,student_gender=?,student_phone_no=?,student_email=? where student_id=?");

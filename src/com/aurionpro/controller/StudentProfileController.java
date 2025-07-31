@@ -9,7 +9,7 @@ import com.aurionpro.dao.studentProfileDao;
 import com.aurionpro.model.studentsModel.StudentProfileModel;
 
 public class StudentProfileController {
-	public static String isValidPhoneNumber(String phoneNumber,Scanner scanner) {
+	private static String isValidPhoneNumber(String phoneNumber,Scanner scanner) {
 		String regex = "^(\\+91|91)?[6-9][0-9]{9}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(phoneNumber);
@@ -20,7 +20,7 @@ public class StudentProfileController {
 		}
 		return phoneNumber;
 	}
-	public static String isValidEmail(String email, Scanner scanner) {
+	private static String isValidEmail(String email, Scanner scanner) {
 	    String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 	    Pattern pattern = Pattern.compile(regex);
 	    Matcher matcher = pattern.matcher(email);
@@ -33,12 +33,12 @@ public class StudentProfileController {
 	    return email;
 	}
 
-	public static StudentProfileModel getProfileDetails() {
+	private static StudentProfileModel getProfileDetails() {
 		Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter Student ID: ");
         int studentId = scanner.nextInt();
-
+        scanner.nextLine();
         System.out.print("Enter Student Address: ");
         String address = scanner.nextLine();
 

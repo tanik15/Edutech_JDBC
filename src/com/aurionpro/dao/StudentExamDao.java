@@ -31,7 +31,7 @@ public class StudentExamDao {
 		}
 		
 	}
-	public static List<StudentExamModel> viewAllExams() {
+	public static List<StudentExamModel> getAllExams() {
 		connection = Database.getConnection();
 		List<StudentExamModel> exams = new ArrayList<>();
 		if (connection != null) {
