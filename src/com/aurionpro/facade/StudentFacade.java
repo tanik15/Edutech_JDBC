@@ -2,10 +2,10 @@ package com.aurionpro.facade;
 
 import java.util.Scanner;
 
-import com.aurionpro.service.StudentEnrollmentService;
-import com.aurionpro.service.StudentExamService;
-import com.aurionpro.service.StudentProfileService;
-import com.aurionpro.service.StudentService;
+import com.aurionpro.service.studentsService.StudentEnrollmentService;
+import com.aurionpro.service.studentsService.StudentExamService;
+import com.aurionpro.service.studentsService.StudentProfileService;
+import com.aurionpro.service.studentsService.StudentService;
 
 public class StudentFacade {
 	public static void StudentFacadeMenu(Scanner scanner) {

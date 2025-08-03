@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 public class StudentExamModel {
     private int examId;
-    private int subjectId;
+    private String subjectId;
     private String examDate;
     private int totalMarks;
     private String semester;
 
-    public StudentExamModel(int examId, int subjectId, String examDate, int totalMarks, String semester) {
+    public StudentExamModel(int examId, String subjectId, String examDate, int totalMarks, String semester) {
         this.examId = examId;
         this.subjectId = subjectId;
         this.examDate = examDate;
@@ -27,11 +27,11 @@ public class StudentExamModel {
         this.examId = examId;
     }
 
-    public int getSubjectId() {
+    public String getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(int subjectId) {
+    public void setSubjectId(String subjectId) {
         this.subjectId = subjectId;
     }
 

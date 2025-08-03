@@ -2,9 +2,9 @@ package com.aurionpro.test;
 
 import java.util.Scanner;
 
-import com.aurionpro.controller.EnrollmentController;
+import com.aurionpro.controller.studentsController.EnrollmentController;
 import com.aurionpro.facade.StudentFacade;
-import com.aurionpro.service.StudentEnrollmentService;
+import com.aurionpro.service.studentsService.StudentEnrollmentService;
 
 public class StudentDaoTest {
 
