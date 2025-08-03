@@ -27,7 +27,7 @@ public class CourseSubjectDao {
 		return courseSubject;
 	}
 
-	public static List<CourseSubjectModel> getSubjects() {
+	public static List<CourseSubjectModel> getAllSubjects() {
 		connection = Database.getConnection();
 		List<CourseSubjectModel> subjects = new ArrayList<>();
 		if (connection != null) {
@@ -45,11 +45,11 @@ public class CourseSubjectDao {
 		return subjects;
 	}
 
-	public static boolean checkSubject(String SubjectId) {
+	private static boolean checkSubject(String SubjectId) {
 		connection = Database.getConnection();
 		ResultSet receivedId;
 		try {
-			preparedStatement = connection.prepareStatement("SELECT subject_id FROM subject_table WHERE student_id = ?");
+			preparedStatement = connection.prepareStatement("SELECT * FROM subject_table WHERE subject_id = ?");
 			preparedStatement.setString(1, SubjectId);
 			receivedId = preparedStatement.executeQuery();
 			if (!receivedId.next()) {
@@ -96,7 +96,6 @@ public class CourseSubjectDao {
 					System.out.println("\n✅ Subject with ID: " + SubjectId + " has been marked as Inactive.\n");
 				return;
 			}
-			System.out.println("subject don't exist");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

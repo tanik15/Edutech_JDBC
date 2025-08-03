@@ -50,14 +50,16 @@ public class CoursesDao {
 		connection = Database.getConnection();
 		ResultSet receivedId;
 		try {
-			preparedStatement = connection.prepareStatement("SELECT course_id FROM course_table WHERE student_id = ?");
+			preparedStatement = connection.prepareStatement("SELECT course_id FROM course_table WHERE course_id = ?");
 			preparedStatement.setString(1, courseId);
 			receivedId = preparedStatement.executeQuery();
 			if (!receivedId.next()) {
-				System.out.println("Course not found");
+				System.out.println("Course Not Found");
 				return false;
 			}
+			receivedId.close();
 			return true;
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,13 +99,30 @@ public class CoursesDao {
 					System.out.println("\n✅ Course with ID: " + courseId + " has been marked as Inactive.\n");
 				return;
 			}
-			System.out.println("Course don't exist");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	public static void assignCourseStudent(String courseId,int studentId) {
+		try {
+			connection = Database.getConnection();
+			if (checkCourse(courseId)) {
+				preparedStatement = connection
+						.prepareStatement("INSERT INTO course_student(course_id,student_id) VALUES(?,?)");
+				preparedStatement.setString(1, courseId);
+				preparedStatement.setInt(2, studentId);
+				int update = preparedStatement.executeUpdate();
+				if (update > 0)
+					System.out.println("\n✅ Student with ID: " + studentId + " has been assigned course "+courseId+"\n");
+				return;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void addNewCourse(CourseModel course) {
 		connection = Database.getConnection();
 		try {
@@ -125,5 +144,7 @@ public class CoursesDao {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 }
