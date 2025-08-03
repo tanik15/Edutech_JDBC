@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 import com.aurionpro.database.Database;
 import com.aurionpro.model.studentsModel.StudentEnrollmentModel;
-import com.aurionpro.model.studentsModel.StudentProfileModel;
 
 public class StudentEnrollmentDao {
 	private static PreparedStatement preparedStatement = null;

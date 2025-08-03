@@ -28,8 +28,8 @@ public class StudentController {
 
 	}
 	
-	public static void displayAStudent() {
-		Scanner scanner = new Scanner(System.in);
+	public static void displayAStudent(Scanner scanner) {
+
 		System.out.print("🔹 Enter the Student Id: ");
 		int studentId = scanner.nextInt();
 		StudentModel student = StudentDao.getAStudent(studentId);
@@ -44,25 +44,21 @@ public class StudentController {
 		        student.getStudent_DOB().toString()
 		    );
 		System.out.println("--------------------------------------------------------------");
-		scanner.close();
-
 	}
 	
-	public static void deleteAStudent() {
-		Scanner scanner = new Scanner(System.in);
+	public static void deleteAStudent(Scanner scanner) {
 		System.out.print("🔹 Enter the Student Id: ");
 		int studentId = scanner.nextInt();
+		scanner.nextLine();
 		System.out.println("\n⚠️  Are you sure you want to delete the student with ID: " + studentId + "?");
 		System.out.print("👉 Enter 'y' to confirm or 'n' to cancel: ");
 		String choice = scanner.nextLine();
 		if(choice.equalsIgnoreCase("y")) {
 			StudentDao.deleteStudent(studentId);
 		}
-		scanner.close();
 	}
 	
-	public static void addNewStudent() {
-		Scanner scanner = new Scanner(System.in);
+	public static void addNewStudent(Scanner scanner) {
 
         System.out.println("\n📥 Enter Student Details");
 
@@ -76,6 +72,6 @@ public class StudentController {
         student.setStudent_name(studentName);
         student.setStudent_DOB(studentDOB);
         StudentDao.addNewStudent(student);
-        scanner.close();
+
 	}
 }

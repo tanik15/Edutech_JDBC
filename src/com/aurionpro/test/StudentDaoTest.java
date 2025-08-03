@@ -3,7 +3,8 @@ package com.aurionpro.test;
 import java.util.Scanner;
 
 import com.aurionpro.controller.EnrollmentController;
-import com.aurionpro.service.EnrollmentService;
+import com.aurionpro.facade.StudentFacade;
+import com.aurionpro.service.StudentEnrollmentService;
 
 public class StudentDaoTest {
 
@@ -32,7 +33,7 @@ public class StudentDaoTest {
 //		Scanner sc = new Scanner(System.in);
 //		System.out.println(StudentProfileController.isValidEmail("123gmail.com",sc));
 //		DateController.viewAllExams();
-		EnrollmentService.displayEnrollmentMenu(scanner);
+		StudentFacade.StudentFacadeMenu(scanner);
 //		List<StudentExamModel> exams = StudentExamDao.viewAllExams();
 //		exams.stream().forEach((exam)->{
 //			System.out.println(exam.getExamId()+"\t"+exam.getSubjectId()+"\t"+exam.getExamDate()+"\t"+exam.getTotalMarks()+"\t"+exam.getSemester());
