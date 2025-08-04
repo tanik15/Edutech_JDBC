@@ -1,4 +1,4 @@
-package com.aurionpro.dao;
+package com.aurionpro.dao.teacherdaos;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aurionpro.database.DBUtil;
-import com.aurionpro.model.TeacherAttendance;
+import com.aurionpro.model.teachermodels.TeacherAttendance;
 
 public class TeacherAttendanceDao {
 	public void addAttendance(TeacherAttendance attendance) {

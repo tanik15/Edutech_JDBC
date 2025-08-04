@@ -1,11 +1,11 @@
-package com.aurionpro.controller;
+package com.aurionpro.controller.teacherControllers;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import com.aurionpro.model.TeacherActivity;
-import com.aurionpro.service.TeacherActivityService;
+import com.aurionpro.model.teachermodels.TeacherActivity;
+import com.aurionpro.service.teacherservices.TeacherActivityService;
 
 public class TeacherActivityController {
     private TeacherActivityService activityService;

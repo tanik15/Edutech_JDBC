@@ -1,4 +1,4 @@
-package com.aurionpro.dao;
+package com.aurionpro.dao.teacherdaos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aurionpro.database.DBUtil;
-import com.aurionpro.model.Teacher;
+import com.aurionpro.model.teachermodels.Teacher;
 
 public class TeacherDao {
 	 // 1. Add Teacher

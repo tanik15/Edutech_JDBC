@@ -1,15 +1,15 @@
-package com.aurionpro.controller;
+package com.aurionpro.controller.teacherControllers;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import com.aurionpro.model.TeacherProfile;
-import com.aurionpro.service.TeacherProfileService;
+import com.aurionpro.model.teachermodels.TeacherProfile;
+import com.aurionpro.service.teacherservices.TeacherProfileService;
 
 public class TeacherProfileController {
-	private TeacherProfileService profileService = new TeacherProfileService();
+    private TeacherProfileService profileService = new TeacherProfileService();
     private Scanner scanner = new Scanner(System.in);
 
     public void start() {
@@ -78,8 +78,9 @@ public class TeacherProfileController {
             if (profiles.isEmpty()) {
                 System.out.println("No profiles found.");
             } else {
+                printProfileHeader();
                 for (TeacherProfile profile : profiles) {
-                    printProfile(profile);
+                    printProfileRow(profile);
                 }
             }
         } catch (SQLException e) {
@@ -96,20 +97,28 @@ public class TeacherProfileController {
             if (profile == null) {
                 System.out.println("No profile found for this ID.");
             } else {
-                printProfile(profile);
+                printProfileHeader();
+                printProfileRow(profile);
             }
         } catch (SQLException e) {
             System.out.println("Error fetching profile: " + e.getMessage());
         }
     }
 
-    private void printProfile(TeacherProfile profile) {
-        System.out.println("\n--- Profile Details ---");
-        System.out.println("Teacher ID: " + profile.getTeacherId());
-        System.out.println("Gender: " + profile.getGender());
-        System.out.println("DOB: " + profile.getDob());
-        System.out.println("Qualification: " + profile.getQualification());
-        System.out.println("Experience: " + profile.getExperience() + " years");
-        System.out.println("Joining Date: " + profile.getJoiningDate());
+    private void printProfileHeader() {
+        System.out.println("\n-----------------------------------------------------------------------------------------------");
+        System.out.printf("| %-10s | %-8s | %-12s | %-20s | %-10s | %-12s |\n",
+                "Teacher ID", "Gender", "DOB", "Qualification", "Experience", "Joining Date");
+        System.out.println("-----------------------------------------------------------------------------------------------");
+    }
+
+    private void printProfileRow(TeacherProfile profile) {
+        System.out.printf("| %-10d | %-8s | %-12s | %-20s | %-10.1f | %-12s |\n",
+                profile.getTeacherId(),
+                profile.getGender(),
+                profile.getDob(),
+                profile.getQualification(),
+                profile.getExperience(),
+                profile.getJoiningDate());
     }
 }

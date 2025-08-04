@@ -1,4 +1,4 @@
-package com.aurionpro.model;
+package com.aurionpro.model.teachermodels;
 
 public class Teacher {
 	private int teacherId;

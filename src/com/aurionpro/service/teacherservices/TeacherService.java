@@ -1,11 +1,11 @@
-package com.aurionpro.service;
+package com.aurionpro.service.teacherservices;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.aurionpro.dao.TeacherDao;
-import com.aurionpro.model.Teacher;
+import com.aurionpro.dao.teacherdaos.TeacherDao;
+import com.aurionpro.model.teachermodels.Teacher;
 
 public class TeacherService {
     private TeacherDao teacherDao;

@@ -1,4 +1,4 @@
-package com.aurionpro.model;
+package com.aurionpro.model.teachermodels;
 
 import java.time.LocalDate;
 

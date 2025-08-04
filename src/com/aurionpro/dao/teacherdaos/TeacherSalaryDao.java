@@ -1,4 +1,4 @@
-package com.aurionpro.dao;
+package com.aurionpro.dao.teacherdaos;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aurionpro.database.DBUtil;
-import com.aurionpro.model.TeacherSalary;
+import com.aurionpro.model.teachermodels.TeacherSalary;
 
 public class TeacherSalaryDao {
 	public void addSalary(TeacherSalary salary) {

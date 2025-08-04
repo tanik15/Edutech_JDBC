@@ -1,10 +1,10 @@
-package com.aurionpro.service;
+package com.aurionpro.service.teacherservices;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import com.aurionpro.dao.TeacherActivityDao;
-import com.aurionpro.model.TeacherActivity;
+import com.aurionpro.dao.teacherdaos.TeacherActivityDao;
+import com.aurionpro.model.teachermodels.TeacherActivity;
 
 public class TeacherActivityService {
 	private TeacherActivityDao activityDao = new TeacherActivityDao();

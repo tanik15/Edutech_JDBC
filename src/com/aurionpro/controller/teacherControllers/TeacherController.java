@@ -1,11 +1,11 @@
-package com.aurionpro.controller;
+package com.aurionpro.controller.teacherControllers;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.aurionpro.model.Teacher;
-import com.aurionpro.service.TeacherService;
+import com.aurionpro.model.teachermodels.Teacher;
+import com.aurionpro.service.teacherservices.TeacherService;
 
 public class TeacherController {
     private TeacherService teacherService;
