@@ -1,4 +1,4 @@
-package com.aurionpro.facade.teacherfacade;
+package com.aurionpro.facade;
 
 import java.util.Scanner;
 
@@ -21,7 +21,20 @@ public class TeacherFacade {
         TeacherActivityController activityController = new TeacherActivityController();
         TeacherSubjectController subjectController = new TeacherSubjectController();
 
+<<<<<<< HEAD:src/com/aurionpro/facade/teacherfacade/TeacherFacade.java
         int choice = 0;
+=======
+		while (choice != 7) {
+			System.out.println("\n=== TEACHER Management MENU ===\n");
+			System.out.println("1. Manage Teachers");
+			System.out.println("2. Manage Teacher Profiles");
+			System.out.println("3. Manage Attendance");
+			System.out.println("4. Manage Salaries");
+			System.out.println("5. Manage Ratings");
+			System.out.println("6. Manage Activities");
+			System.out.println("7. Back to Main Menu");
+			System.out.print("Enter your choice: ");
+>>>>>>> master:src/com/aurionpro/facade/TeacherFacade.java
 
         while (choice != 8) {
             System.out.println("\n=== TEACHER MANAGEMENT MENU ===");

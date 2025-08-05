@@ -12,14 +12,15 @@ public class DBUtil {
 	    
 	    
 	    public static Connection getConnection() {
-	        Connection connection = null;
-	        try {
-	            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-	        } catch (SQLException e) {
-	            System.out.println("Database connection failed!");
-	            e.printStackTrace();
-	        }
-	        return connection;
+	        // Connection connection = null;
+	        // try {
+	        //     connection = DriverManager.getConnection(URL, USER, PASSWORD);
+	        // } catch (SQLException e) {
+	        //     System.out.println("Database connection failed!");
+	        //     e.printStackTrace();
+	        // }
+	        // return connection;
+			return Database.getConnection();
 	    }
 	}
 
