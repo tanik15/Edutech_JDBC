@@ -8,7 +8,7 @@ public class StudentService {
 	public static void displayStudentMenu(Scanner scanner) {
 		int choice = 0;
 		while (choice != 8) {
-			System.out.println("\n📚 === Student Menu ===");
+			System.out.println("\n📚 === Student Menu ===\n");
 			System.out.println("Please choose from the options below:");
 			System.out.println("1️  Display All Students");
 			System.out.println("2️  Search a Student");

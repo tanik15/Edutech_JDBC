@@ -160,7 +160,7 @@ public class StudentDao {
 		try {
 			connection = Database.getConnection();
 			preparedStatement = connection.prepareStatement(
-					"SELECT s.Student_rollnumber,s.student_name, group_concat(st.subject_name) FROM student_table s LEFT JOIN course_student c ON c.student_id = s.student_id LEFT JOIN course_subject cs ON cs.course_id = c.course_id LEFT JOIN subject_table st ON st.subject_id = cs.subject_id GROUP BY   s.student_id, s.student_name, s.student_rollnumber");
+					"SELECT s.Student_rollnumber,s.student_name, group_concat(st.subject_name) FROM student_table s LEFT JOIN course_student c ON c.student_id = s.student_id LEFT JOIN course_subject cs ON cs.course_id = c.course_id LEFT JOIN subject_table st ON st.subject_id = cs.subject_id WHERE cc.is_active=TRUE GROUP BY s.student_id, s.student_name, s.student_rollnumber");
 			ResultSet result = preparedStatement.executeQuery();
 			while (result.next()) {
 				StudentCourseModel studentCourses = new StudentCourseModel();

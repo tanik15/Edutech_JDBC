@@ -9,7 +9,7 @@ public class StudentExamService {
 	public static void displayExamMenu(Scanner scanner) {
 		int choice = 0;
 		while (choice !=3) {
-			System.out.println("\n📚 === Exam Menu ===");
+			System.out.println("\n📚 === Exam Menu ===\n");
 			System.out.println("Please choose from the options below:");
 			System.out.println("1️  Add New Exam");
 			System.out.println("2️  View All Exams");

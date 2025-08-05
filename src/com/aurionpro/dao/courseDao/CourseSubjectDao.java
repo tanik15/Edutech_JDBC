@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.aurionpro.database.Database;
 import com.aurionpro.model.courseModels.CourseSubjectModel;
+import com.aurionpro.model.studentsModel.StudentModel;
 
 public class CourseSubjectDao {
 	private static PreparedStatement preparedStatement = null;
@@ -27,12 +28,13 @@ public class CourseSubjectDao {
 		return courseSubject;
 	}
 
-	public static List<CourseSubjectModel> getAllSubjects() {
+	public static List<CourseSubjectModel> getAllSubjects(boolean isactive) {
 		connection = Database.getConnection();
 		List<CourseSubjectModel> subjects = new ArrayList<>();
 		if (connection != null) {
 			try {
-				preparedStatement = connection.prepareStatement("SELECT * FROM subject_table WHERE is_active = TRUE");
+				
+				preparedStatement = connection.prepareStatement("SELECT * FROM subject_table WHERE is_active ="+isactive);
 				ResultSet result = preparedStatement.executeQuery();
 				while (result.next()) {
 					CourseSubjectModel subject = createSubjectObj(result);
@@ -106,16 +108,106 @@ public class CourseSubjectDao {
 		connection = Database.getConnection();
 		try {
 			if (!checkSubject(subject.getSubjectId())) {
-				preparedStatement = connection.prepareStatement("INSERT INTO subject_table VALUES (?,?,?,?,?)");
+				preparedStatement = connection.prepareStatement(
+						"INSERT INTO subject_table(subject_id,subject_name,semester,credits) VALUES (?,?,?,?,?)");
 				preparedStatement.setString(1, subject.getSubjectId());
 				preparedStatement.setString(2, subject.getSubjectName());
 				preparedStatement.setString(3, subject.getSemester());
 				preparedStatement.setInt(4, subject.getCredits());
 				int update = preparedStatement.executeUpdate();
 				if (update == 1)
-					System.out.println("\n✅ subject added successfully!");
+					System.out.println("\n✅ Subject: " + subject.getSubjectName() + " added successfully!");
 				return;
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void updateSubjectByID(CourseSubjectModel subject, boolean isActive) {
+		try {
+			connection = Database.getConnection();
+			if (checkSubject(subject.getSubjectId())) {
+				preparedStatement = connection.prepareStatement(
+						"UPDATE subject_table SET semester,credits,is_active=? WHERE subject_id = ?;");
+				preparedStatement.setString(1, subject.getSemester());
+				preparedStatement.setInt(2, subject.getCredits());
+				preparedStatement.setBoolean(3, isActive);
+				preparedStatement.setString(4, subject.getSubjectId());
+				int update = preparedStatement.executeUpdate();
+				if (update > 0)
+					System.out.println("\n✅ Subject with ID: " + subject.getSubjectId() + " has been Updated.\n");
+				return;
+			}
+			System.out.println("Subject Not Found");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static boolean checkSubjectByName(String courseName) {
+		connection = Database.getConnection();
+		ResultSet receivedId;
+		try {
+			preparedStatement = connection
+					.prepareStatement("SELECT subject_name FROM subject_table WHERE subject_name = ?");
+			preparedStatement.setString(1, courseName);
+			receivedId = preparedStatement.executeQuery();
+			if (!receivedId.next()) {
+				System.out.println("Subject Not Found");
+				return false;
+			}
+			receivedId.close();
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static void updateSubjectByName(CourseSubjectModel subject, boolean isActive) {
+		try {
+			connection = Database.getConnection();
+			if (checkSubjectByName(subject.getSubjectName())) {
+				preparedStatement = connection.prepareStatement(
+						"UPDATE subject_table SET semester,credits,is_active=? WHERE subject_id = ?;");
+				preparedStatement.setString(1, subject.getSemester());
+				preparedStatement.setInt(2, subject.getCredits());
+				preparedStatement.setBoolean(3, isActive);
+				preparedStatement.setString(4, subject.getSubjectId());
+				int update = preparedStatement.executeUpdate();
+				if (update > 0)
+					System.out.println("\n✅ Subject with ID: " + subject.getSubjectId() + " has been Updated.\n");
+				return;
+			}
+			System.out.println("Subject Not Found");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void assignSubjectCourse(String subjectId, String courseId) {
+		try {
+			connection = Database.getConnection();
+			if (!CoursesDao.checkCourse(courseId)) {
+				System.out.println("Course not found");
+				return;
+			}
+			if (checkSubject(subjectId)) {
+				preparedStatement = connection
+						.prepareStatement("INSERT INTO course_subject(course_id,subject_id) VALUES(?,?)");
+				preparedStatement.setString(1, courseId);
+				preparedStatement.setString(2, subjectId);
+				int update = preparedStatement.executeUpdate();
+				if (update > 0)
+					System.out.println(
+							"\n✅ Subject with ID: " + subjectId + " has been assigned course " + courseId + "\n");
+				return;
+			}
+			System.out.println("Subject Not Found");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -11,11 +11,14 @@ public class StudentFacade {
 	public static void StudentFacadeMenu(Scanner scanner) {
 		int choice = 0;
 		while (choice != 5) {
+			System.out.println("\n📚 === Student Management Menu ===\n");
+			System.out.println("Please choose from the options below:");
 			System.out.println("1. Student Menu");
 			System.out.println("2. Profile Menu");
 			System.out.println("3. Enrollment Menu");
 			System.out.println("4. Exam Menu");
 			System.out.println("5. Exit");
+			System.out.print("👉 Enter your choice: ");
 			choice = scanner.nextInt();
 			switch (choice) {
 			case 1: {

@@ -13,13 +13,13 @@ public class Database_test {
 		System.out.println(connection);
 		Connection connection1 = Database.getConnection();
 		System.out.println(connection1);
-		try {
-			connection1.close();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+////			connection1.close();
+////			connection.close();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

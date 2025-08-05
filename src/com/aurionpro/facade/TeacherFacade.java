@@ -1,4 +1,4 @@
-package com.aurionpro.facade.teacherfacade;
+package com.aurionpro.facade;
 
 import java.util.Scanner;
 
@@ -21,7 +21,7 @@ public class TeacherFacade {
 		int choice = 0;
 
 		while (choice != 7) {
-			System.out.println("\n=== TEACHER MANAGEMENT MENU ===");
+			System.out.println("\n=== TEACHER Management MENU ===\n");
 			System.out.println("1. Manage Teachers");
 			System.out.println("2. Manage Teacher Profiles");
 			System.out.println("3. Manage Attendance");

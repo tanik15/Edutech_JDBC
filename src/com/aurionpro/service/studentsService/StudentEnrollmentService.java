@@ -9,7 +9,7 @@ public class StudentEnrollmentService {
 	public static void displayEnrollmentMenu(Scanner scanner) {
 		int choice = 0;
 		while (choice != 5) {
-			System.out.println("\n📚 === Enrollment Menu ===");
+			System.out.println("\n📚 === Enrollment Menu ===\n");
 			System.out.println("Please choose from the options below:");
 			System.out.println("1️  Enroll new Student");
 			System.out.println("2️  Update Enrolled Student");

@@ -10,7 +10,7 @@ public class Database {
 	private Database() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/eduTech", "root","Samruddhi@2003");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/eduTech", ConfidentialData.username,ConfidentialData.password);
 //			System.out.println("successful");
 
 		} catch (ClassNotFoundException e) {

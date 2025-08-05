@@ -9,7 +9,7 @@ public class CourseFacade {
 	public static void displayCourseMenu(Scanner scanner) {
 		int choice = 0;
 		while (choice != 3) {
-			System.out.println("\n📚 === Courses Operations ===");
+			System.out.println("\n📚 === Courses Management Menu ===\n");
 			System.out.println("Please choose from the options below:");
 			System.out.println("1. Course Menu");
 			System.out.println("2. Subject Menu");
