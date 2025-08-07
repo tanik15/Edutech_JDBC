@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aurionpro.database.DBUtil;
+import com.aurionpro.database.Database;
 import com.aurionpro.model.teachermodels.Teacher;
 
 public class TeacherDao {
 	 // 1. Add Teacher
     public boolean addTeacher(Teacher teacher) {
         String query = "INSERT INTO teacher (name, email, phone_number, is_active) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DBUtil.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, teacher.getName());

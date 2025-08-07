@@ -1,6 +1,7 @@
 package com.aurionpro.dao.teacherdaos;
 
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,13 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aurionpro.database.DBUtil;
+import com.aurionpro.database.Database;
 import com.aurionpro.model.teachermodels.TeacherActivity;
 
 public class TeacherActivityDao {
+	private Connection conn = null;
+	
 	public void addActivity(TeacherActivity activity) {
         String sql = "INSERT INTO teacher_activities (teacher_id, activity_name, description, activity_date) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DBUtil.getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, activity.getTeacherId());
@@ -33,7 +37,7 @@ public class TeacherActivityDao {
         List<TeacherActivity> activities = new ArrayList<>();
         String sql = "SELECT * FROM teacher_activities";
 
-        try (Connection conn = DBUtil.getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -58,7 +62,7 @@ public class TeacherActivityDao {
         List<TeacherActivity> activities = new ArrayList<>();
         String sql = "SELECT * FROM teacher_activities WHERE teacher_id = ?";
 
-        try (Connection conn = DBUtil.getConnection();
+        try (
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, teacherId);
@@ -79,5 +83,11 @@ public class TeacherActivityDao {
         }
 
         return activities;
+    }
+    
+    public TeacherActivityDao() {
+    	if(conn==null) {
+			conn  = Database.getConnection();
+		}
     }
 }

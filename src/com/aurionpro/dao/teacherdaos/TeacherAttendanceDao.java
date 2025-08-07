@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aurionpro.database.DBUtil;
+import com.aurionpro.database.Database;
 import com.aurionpro.model.teachermodels.TeacherAttendance;
 
 public class TeacherAttendanceDao {
 	public void addAttendance(TeacherAttendance attendance) {
         String sql = "INSERT INTO teacher_attendance (teacher_id, date, status, remarks) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DBUtil.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, attendance.getTeacherId());

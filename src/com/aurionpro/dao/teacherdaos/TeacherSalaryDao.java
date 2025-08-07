@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aurionpro.database.DBUtil;
+import com.aurionpro.database.Database;
 import com.aurionpro.model.teachermodels.TeacherSalary;
 
 public class TeacherSalaryDao {
 	public void addSalary(TeacherSalary salary) {
         String sql = "INSERT INTO teacher_salary (teacher_id, salary_amount, pay_date, bonus, deductions) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DBUtil.getConnection();
+        try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, salary.getTeacherId());
             stmt.setDouble(2, salary.getSalaryAmount());

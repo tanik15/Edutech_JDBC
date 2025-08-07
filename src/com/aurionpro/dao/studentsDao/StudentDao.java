@@ -251,7 +251,7 @@ public class StudentDao {
 		try {
 			connection = Database.getConnection();
 			preparedStatement = connection.prepareStatement(
-					"SELECT s.student_id,s.student_name,et.exam_id,st.subject_name,sm.marks_obtained,et.total_marks FROM student_table s LEFT JOIN students_marks sm ON sm.student_id = s.student_id LEFT JOIN exam_table et ON et.exam_id = sm.exam_id LEFT JOIN subject_table st  ON st.subject_id = et.subject_id WHERE s.is_active=TRUE and s.student_id=?");
+					"SELECT s.student_id,s.student_name,et.exam_id,st.subject_name,sm.marks_obtained,et.total_marks FROM student_table s LEFT JOIN students_marks sm ON sm.student_id = s.student_id LEFT JOIN exam_table et ON et.exam_id = sm.exam_id LEFT JOIN subject_table st  ON st.subject_id = et.subject_id WHERE s.student_id=?");
 			preparedStatement.setInt(1, studentId);
 			ResultSet result = preparedStatement.executeQuery();
 			while (result.next()) {
