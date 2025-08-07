@@ -130,7 +130,7 @@ public class CourseSubjectDao {
 			connection = Database.getConnection();
 			if (checkSubject(subject.getSubjectId())) {
 				preparedStatement = connection.prepareStatement(
-						"UPDATE subject_table SET semester,credits,is_active=? WHERE subject_id = ?;");
+						"UPDATE subject_table SET semester=?,credits=?,is_active=? WHERE subject_id = ?;");
 				preparedStatement.setString(1, subject.getSemester());
 				preparedStatement.setInt(2, subject.getCredits());
 				preparedStatement.setBoolean(3, isActive);
@@ -172,7 +172,7 @@ public class CourseSubjectDao {
 			connection = Database.getConnection();
 			if (checkSubjectByName(subject.getSubjectName())) {
 				preparedStatement = connection.prepareStatement(
-						"UPDATE subject_table SET semester,credits,is_active=? WHERE subject_id = ?;");
+						"UPDATE subject_table SET semester=?,credits=?,is_active=? WHERE subject_id = ?;");
 				preparedStatement.setString(1, subject.getSemester());
 				preparedStatement.setInt(2, subject.getCredits());
 				preparedStatement.setBoolean(3, isActive);

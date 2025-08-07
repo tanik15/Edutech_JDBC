@@ -9,7 +9,8 @@ import java.util.List;
 
 import com.aurionpro.database.Database;
 import com.aurionpro.model.studentsModel.StudentCourseModel;
-import com.aurionpro.model.studentsModel.StudentFeesModel;
+import com.aurionpro.model.studentsModel.StudentExamMarks;
+import com.aurionpro.model.studentsModel.StudentMarks;
 import com.aurionpro.model.studentsModel.StudentModel;
 
 public class StudentDao {
@@ -155,12 +156,79 @@ public class StudentDao {
 
 		return studentsCourses;
 	}
+	
+	public static StudentCourseModel getAStudentSubjects(int studentId) {
+		try {
+			connection = Database.getConnection();
+			preparedStatement = connection.prepareStatement(
+					"SELECT s.Student_rollnumber,s.student_name, group_concat(st.subject_name),group_concat(st.subject_id) FROM student_table s LEFT JOIN course_student c ON c.student_id = s.student_id LEFT JOIN course_subject cs ON cs.course_id = c.course_id LEFT JOIN subject_table st ON st.subject_id = cs.subject_id WHERE st.is_active=TRUE and s.student_id = ? GROUP BY s.student_id, s.student_name, s.student_rollnumber");
+			preparedStatement.setInt(1, studentId);
+			ResultSet result = preparedStatement.executeQuery();
+			while (result.next()) {
+				StudentCourseModel studentCourses = new StudentCourseModel();
+				studentCourses.setstudentRollnumber(result.getInt(1));
+				studentCourses.setStudentName(result.getString(2));
+				studentCourses.setStudentSubjects(result.getString(3));
+				studentCourses.setStudentSubjectsIds(result.getString(4));
+				return studentCourses;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static StudentCourseModel getAStudentExams(int studentId) {
+		try {
+			connection = Database.getConnection();
+			preparedStatement = connection.prepareStatement(
+					"SELECT s.Student_rollnumber,s.student_name, group_concat(st.subject_name),group_concat(et.exam_id) FROM student_table s LEFT JOIN course_student c  ON c.student_id = s.student_id  LEFT JOIN course_subject cs ON cs.course_id = c.course_id LEFT JOIN subject_table st ON st.subject_id = cs.subject_id LEFT JOIN exam_table et ON et.subject_id = st.subject_id WHERE st.is_active=TRUE and s.student_id = ? and et.is_active = true GROUP BY s.student_id, s.student_name, s.student_rollnumber");
+			preparedStatement.setInt(1, studentId);
+			ResultSet result = preparedStatement.executeQuery();
+			while (result.next()) {
+				StudentCourseModel studentCourses = new StudentCourseModel();
+				studentCourses.setstudentRollnumber(result.getInt(1));
+				studentCourses.setStudentName(result.getString(2));
+				studentCourses.setStudentSubjects(result.getString(3));
+				studentCourses.setStudentSubjectsIds(result.getString(4).toString());
+				return studentCourses;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static void setStudentMarks(StudentMarks studentMark) {
+		try {
+			connection = Database.getConnection();
+			preparedStatement = connection.prepareStatement(
+					"INSERT INTO students_marks (student_id, marks_obtained, exam_id)VALUES (?, ?, ?)");
+			preparedStatement.setInt(1, studentMark.getStudentId());
+			preparedStatement.setInt(2, studentMark.getMarksObtained());
+			preparedStatement.setInt(3, studentMark.getexamId());
+			int update = preparedStatement.executeUpdate();
+			if(update>0) {
+				System.out.println("\n===Student Marks is updated===\n");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static List<StudentCourseModel> getStudentSubjects() {
 		List<StudentCourseModel> studentsCourses = new ArrayList<>();
 		try {
 			connection = Database.getConnection();
 			preparedStatement = connection.prepareStatement(
-					"SELECT s.Student_rollnumber,s.student_name, group_concat(st.subject_name) FROM student_table s LEFT JOIN course_student c ON c.student_id = s.student_id LEFT JOIN course_subject cs ON cs.course_id = c.course_id LEFT JOIN subject_table st ON st.subject_id = cs.subject_id WHERE cc.is_active=TRUE GROUP BY s.student_id, s.student_name, s.student_rollnumber");
+					"SELECT s.Student_rollnumber,s.student_name, group_concat(st.subject_name) FROM student_table s LEFT JOIN course_student c ON c.student_id = s.student_id LEFT JOIN course_subject cs ON cs.course_id = c.course_id LEFT JOIN subject_table st ON st.subject_id = cs.subject_id WHERE st.is_active=TRUE GROUP BY s.student_id, s.student_name, s.student_rollnumber");
 			ResultSet result = preparedStatement.executeQuery();
 			while (result.next()) {
 				StudentCourseModel studentCourses = new StudentCourseModel();
@@ -177,6 +245,35 @@ public class StudentDao {
 		
 		return studentsCourses;
 	}
+	
+	public static List<StudentExamMarks> getStudentMarks(int studentId) {
+		List<StudentExamMarks> studentsMarks = new ArrayList<>();
+		try {
+			connection = Database.getConnection();
+			preparedStatement = connection.prepareStatement(
+					"SELECT s.student_id,s.student_name,et.exam_id,st.subject_name,sm.marks_obtained,et.total_marks FROM student_table s LEFT JOIN students_marks sm ON sm.student_id = s.student_id LEFT JOIN exam_table et ON et.exam_id = sm.exam_id LEFT JOIN subject_table st  ON st.subject_id = et.subject_id WHERE s.is_active=TRUE and s.student_id=?");
+			preparedStatement.setInt(1, studentId);
+			ResultSet result = preparedStatement.executeQuery();
+			while (result.next()) {
+				StudentExamMarks studentMark = new StudentExamMarks();
+				studentMark.setStudentId(result.getInt(1));
+				studentMark.setStudentName(result.getString(2));
+				studentMark.setExamId(result.getInt(3));
+				studentMark.setSubjectName(result.getString(4));
+				studentMark.setMarksObtained(result.getInt(5));
+				studentMark.setMaxMarks(result.getInt(6));
+				studentsMarks.add(studentMark);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return studentsMarks;
+	}
+	
+	
 	
 
 }

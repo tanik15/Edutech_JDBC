@@ -82,7 +82,6 @@ public class CourseSubjectController {
 
 		System.out.print("🔹 Enter Semester (Semester 1): ");
 		subject.setSemester(scanner.nextLine());
-		scanner.nextLine(); // consume newline
 
 		System.out.print("🔹 Enter Credits: ");
 		subject.setCredits(scanner.nextInt());
@@ -92,7 +91,6 @@ public class CourseSubjectController {
 
 	public static void updateASubjectById(Scanner scanner) {
 		CourseSubjectModel course = getCommonSubjectDetails(scanner, "ID");
-
 		System.out.print("🔹 Enter Subject Status (Active/Inactive): ");
 		String status = scanner.nextLine();
 		boolean isActive = true;
@@ -119,5 +117,15 @@ public class CourseSubjectController {
 
 	}
 
-	
+	public static void assignSubjectToCourse(Scanner scanner) {
+		displayAllCoursesSubject();
+		CourseController.displayAllCourses();
+		scanner.nextLine();
+		System.out.print("🔹 Enter Subject ID (e.g., MATH101): ");
+		String subjectId = scanner.nextLine();
+		System.out.print("🔹 Enter Course ID (e.g., CSE101): ");
+		String courseId = scanner.nextLine();
+		CourseSubjectDao.assignSubjectCourse(subjectId, courseId);;
+	}
+
 }

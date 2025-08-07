@@ -5,6 +5,15 @@ public class StudentCourseModel {
 	private String studentName;
 	private String studentCourses;
 	private String studentSubjects;
+	private String studentSubjectsIds;
+	public String getStudentSubjectsIds() {
+		return studentSubjectsIds;
+	}
+
+	public void setStudentSubjectsIds(String studentSubjectsIds) {
+		this.studentSubjectsIds = studentSubjectsIds;
+	}
+
 	private int studentFees;
 
 	// Constructor

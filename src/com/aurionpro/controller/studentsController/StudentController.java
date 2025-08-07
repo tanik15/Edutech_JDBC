@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 import com.aurionpro.dao.studentsDao.StudentDao;
 import com.aurionpro.model.studentsModel.StudentCourseModel;
-import com.aurionpro.model.studentsModel.StudentFeesModel;
+import com.aurionpro.model.studentsModel.StudentExamMarks;
+import com.aurionpro.model.studentsModel.StudentMarks;
 import com.aurionpro.model.studentsModel.StudentModel;
 
 public class StudentController {
@@ -79,9 +80,7 @@ public class StudentController {
 	
 	public static void displayStudentCourses() {
 	  	List<StudentCourseModel> studentcourses = StudentDao.getStudentCourses();
-	  	studentcourses.stream().forEach((s)->{
-	  		System.out.println(s.getStudentName());
-	  	});
+	
 	  	System.out.println("\n 🎓 Students Courses");
 		System.out.println("----------------------------------------------------------------------------------------");
 		System.out.printf("| %-15s | %-20s | %-43s |\n", "Student RollNo", "Student Name", "Courses");
@@ -100,9 +99,6 @@ public class StudentController {
 	}
 	public static void displayStudentFees() {
 		List<StudentCourseModel> studentcourses = StudentDao.getStudentCourses();
-		studentcourses.stream().forEach((s)->{
-			System.out.println(s.getStudentName());
-		});
 		System.out.println("\n 🎓 Students Fees");
 		System.out.println("--------------------------------------------------------");
 		System.out.printf("| %-15s | %-20s |%-12s |\n", "Student RollNo", "Student Name","Total Fees");
@@ -118,12 +114,7 @@ public class StudentController {
 		
 	}
 	
-	public static void displayStudentSubjects() {
-	  	List<StudentCourseModel> studentcourses = StudentDao.getStudentSubjects();
-	  	studentcourses.stream().forEach((s)->{
-	  		System.out.println(s.getStudentName());
-	  	});
-	  	System.out.println("\n 🎓 Students Subjects");
+	private static void printStudentSubject(List<StudentCourseModel> studentcourses) {
 		System.out.println("---------------------------------------------------------------------------------------");
 		System.out.printf("| %-15s | %-20s | %-42s |\n", "Student RollNo", "Student Name", "Subjects");
 		System.out.println("---------------------------------------------------------------------------------------");
@@ -140,5 +131,71 @@ public class StudentController {
 	  	
 	}
 	
+	public static void displayStudentSubjects() {
+		
+	  	List<StudentCourseModel> studentcourses = StudentDao.getStudentSubjects();
+	  	System.out.println("\n 🎓 Students Subjects");
+	  	printStudentSubject(studentcourses);	
+	}
+	public static void displayAStudentSubjects(Scanner scanner) {
+		System.out.print("🔹 Enter the Student Id: ");
+		int studentId = scanner.nextInt();
+		List<StudentCourseModel> studentcourses = List.of(StudentDao.getAStudentSubjects(studentId));
+		System.out.println("\n 🎓 Students Subjects");
+		printStudentSubject(studentcourses);	
+	}
+	
+	public static void setStudentMarks(Scanner scanner) {
+		System.out.print("🔹 Enter the Student Id: ");
+		int studentId = scanner.nextInt();
+		scanner.nextLine();
+		List<StudentCourseModel> studentcourses = List.of(StudentDao.getAStudentExams(studentId));
+		System.out.println("\n 🎓 Students Subjects");
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+		System.out.printf("| %-15s | %-20s | %-42s | %-15s|\n", "Student RollNo", "Student Name", "Subjects","ExamId");
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+
+		studentcourses.stream().forEach(student -> {
+		    System.out.printf("| %-15d | %-20s | %-42s |%-15s |\n",
+		    		student.getstudentRollNumber(),
+		    		student.getStudentName(),
+		    		(student.getStudentSubjects()== null)?"Not Assigned":student.getStudentSubjects(),
+		    		student.getStudentSubjectsIds()
+		    );
+		});
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+	  	
+
+        System.out.print("Enter Exam ID: ");
+        int examId = scanner.nextInt();
+		System.out.print("Enter Marks Obtained: ");
+        int marksObtained = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        // Create StudentMarks object
+        StudentMarks studentMarks = new StudentMarks(studentId, marksObtained, examId);
+        StudentDao.setStudentMarks(studentMarks);
+	}
+	public static void displayStudentMarks(Scanner scanner) {
+		System.out.print("🔹 Enter the Student Id: ");
+		int studentId = scanner.nextInt();
+		scanner.nextLine();
+		List<StudentExamMarks> studentMarks = StudentDao.getStudentMarks(studentId);
+		System.out.println("\n 🎓 Students Exam Marks");
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+		System.out.printf("| %-10s | %-20s | %-10s | %-15s| %-10s| %-10s|\n", "Student Id", "Student Name", "ExamId","SubjectName","MarksObtained","MaxMarks");
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+
+		studentMarks.stream().forEach(marks -> {
+		    System.out.printf("| %-10d | %-20s | %-10d | %-15s | %-10d | %-10d |\n",
+		    		marks.getStudentId(),
+		    		marks.getStudentName(),
+		    		marks.getExamId(),
+		    		marks.getSubjectName(),
+		    		marks.getMarksObtained(),
+		    		marks.getMaxMarks()
+		    );
+		});
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+	}
 	
 }
