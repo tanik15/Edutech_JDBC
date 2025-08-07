@@ -9,14 +9,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aurionpro.database.DBUtil;
+import com.aurionpro.database.Database;
 import com.aurionpro.model.teachermodels.TeacherAttendance;
 
 public class TeacherAttendanceDao {
-	public void addAttendance(TeacherAttendance attendance) {
+    
+    
+    private Connection conn;
+
+    
+    public TeacherAttendanceDao() {
+        this.conn = Database.getConnection();
+    }
+
+    public void addAttendance(TeacherAttendance attendance) {
         String sql = "INSERT INTO teacher_attendance (teacher_id, date, status, remarks) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, attendance.getTeacherId());
             stmt.setDate(2, Date.valueOf(attendance.getDate()));
@@ -34,8 +42,7 @@ public class TeacherAttendanceDao {
         List<TeacherAttendance> list = new ArrayList<>();
         String sql = "SELECT * FROM teacher_attendance";
 
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
+        try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -60,19 +67,19 @@ public class TeacherAttendanceDao {
         String sql = "SELECT * FROM teacher_attendance WHERE attendance_id = ?";
         TeacherAttendance attendance = null;
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                attendance = new TeacherAttendance();
-                attendance.setAttendanceId(rs.getInt("attendance_id"));
-                attendance.setTeacherId(rs.getInt("teacher_id"));
-                attendance.setDate(rs.getDate("date").toLocalDate());
-                attendance.setStatus(rs.getString("status"));
-                attendance.setRemarks(rs.getString("remarks"));
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    attendance = new TeacherAttendance();
+                    attendance.setAttendanceId(rs.getInt("attendance_id"));
+                    attendance.setTeacherId(rs.getInt("teacher_id"));
+                    attendance.setDate(rs.getDate("date").toLocalDate());
+                    attendance.setStatus(rs.getString("status"));
+                    attendance.setRemarks(rs.getString("remarks"));
+                }
             }
 
         } catch (SQLException e) {
@@ -85,9 +92,7 @@ public class TeacherAttendanceDao {
     public void deleteAttendance(int id) {
         String sql = "DELETE FROM teacher_attendance WHERE attendance_id = ?";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
@@ -99,9 +104,7 @@ public class TeacherAttendanceDao {
     public void updateAttendance(TeacherAttendance attendance) {
         String sql = "UPDATE teacher_attendance SET teacher_id = ?, date = ?, status = ?, remarks = ? WHERE attendance_id = ?";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, attendance.getTeacherId());
             stmt.setDate(2, Date.valueOf(attendance.getDate()));
             stmt.setString(3, attendance.getStatus());
@@ -115,4 +118,3 @@ public class TeacherAttendanceDao {
         }
     }
 }
-

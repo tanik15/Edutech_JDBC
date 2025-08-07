@@ -8,17 +8,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aurionpro.database.DBUtil;
+import com.aurionpro.database.Database;
 import com.aurionpro.model.teachermodels.TeacherProfile;
 
 public class TeacherProfileDao {
-	// 1. Insert profile
+
+    
+    private Connection conn;
+
+    public TeacherProfileDao() {
+        this.conn = Database.getConnection();
+    }
+
+
     public boolean addTeacherProfile(TeacherProfile profile) {
         String query = "INSERT INTO teacher_profile (teacher_id, gender, dob, qualification, experience, joining_date) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, profile.getTeacherId());
             stmt.setString(2, profile.getGender());
             stmt.setDate(3, Date.valueOf(profile.getDob()));
@@ -39,16 +45,13 @@ public class TeacherProfileDao {
     public TeacherProfile getProfileByTeacherId(int teacherId) {
         String query = "SELECT * FROM teacher_profile WHERE teacher_id = ?";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, teacherId);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return mapResultSetToProfile(rs);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToProfile(rs);
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,8 +64,7 @@ public class TeacherProfileDao {
         List<TeacherProfile> profiles = new ArrayList<>();
         String query = "SELECT * FROM teacher_profile";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
+        try (PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
@@ -80,9 +82,7 @@ public class TeacherProfileDao {
     public boolean updateTeacherProfile(TeacherProfile profile) {
         String query = "UPDATE teacher_profile SET gender = ?, dob = ?, qualification = ?, experience = ?, joining_date = ? WHERE teacher_id = ?";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, profile.getGender());
             stmt.setDate(2, Date.valueOf(profile.getDob()));
             stmt.setString(3, profile.getQualification());
@@ -100,13 +100,11 @@ public class TeacherProfileDao {
         return false;
     }
 
-    // 5. Delete profile (optional, if required)
+    // 5. Delete profile
     public boolean deleteTeacherProfile(int teacherId) {
         String query = "DELETE FROM teacher_profile WHERE teacher_id = ?";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, teacherId);
             int rows = stmt.executeUpdate();
             return rows > 0;
@@ -118,7 +116,7 @@ public class TeacherProfileDao {
         return false;
     }
 
-    // Utility function to convert ResultSet into TeacherProfile object
+    // Utility method to map ResultSet to TeacherProfile object
     private TeacherProfile mapResultSetToProfile(ResultSet rs) throws SQLException {
         TeacherProfile profile = new TeacherProfile();
         profile.setTeacherId(rs.getInt("teacher_id"));

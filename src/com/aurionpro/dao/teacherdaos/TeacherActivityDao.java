@@ -8,16 +8,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aurionpro.database.DBUtil;
+import com.aurionpro.database.Database;
 import com.aurionpro.model.teachermodels.TeacherActivity;
 
 public class TeacherActivityDao {
-	public void addActivity(TeacherActivity activity) {
+
+ 
+    private Connection conn;
+
+    
+    public TeacherActivityDao() {
+        this.conn = Database.getConnection();
+    }
+
+    public void addActivity(TeacherActivity activity) {
         String sql = "INSERT INTO teacher_activities (teacher_id, activity_name, description, activity_date) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, activity.getTeacherId());
             stmt.setString(2, activity.getActivityName());
             stmt.setString(3, activity.getDescription());
@@ -33,8 +40,7 @@ public class TeacherActivityDao {
         List<TeacherActivity> activities = new ArrayList<>();
         String sql = "SELECT * FROM teacher_activities";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
@@ -58,21 +64,20 @@ public class TeacherActivityDao {
         List<TeacherActivity> activities = new ArrayList<>();
         String sql = "SELECT * FROM teacher_activities WHERE teacher_id = ?";
 
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, teacherId);
-            ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                TeacherActivity activity = new TeacherActivity();
-                activity.setActivityId(rs.getInt("activity_id"));
-                activity.setTeacherId(rs.getInt("teacher_id"));
-                activity.setActivityName(rs.getString("activity_name"));
-                activity.setDescription(rs.getString("description"));
-                activity.setActivityDate(rs.getDate("activity_date").toLocalDate());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    TeacherActivity activity = new TeacherActivity();
+                    activity.setActivityId(rs.getInt("activity_id"));
+                    activity.setTeacherId(rs.getInt("teacher_id"));
+                    activity.setActivityName(rs.getString("activity_name"));
+                    activity.setDescription(rs.getString("description"));
+                    activity.setActivityDate(rs.getDate("activity_date").toLocalDate());
 
-                activities.add(activity);
+                    activities.add(activity);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
